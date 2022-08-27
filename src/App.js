@@ -5,7 +5,6 @@ function App() {
   const [products, setProducts] = useState([]);
   const [searchResult, setSearchResult] = React.useState(products);
   const [searchInput, setSearchInput] = React.useState("");
-  // const [sortBy, setSortBy] = React.useState("all");
   const options = Array.from(new Set(products.map((p) => p.brand)));
 
   useEffect(() => {
