@@ -1,7 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
+  const [products, setProducts] = useState([]);
+  const [searchResult, setSearchResult] = React.useState(products);
+  const [searchInput, setSearchInput] = React.useState("");
+
+  useEffect(() => {
+    fetch("http://localhost:3001/api/products")
+      .then((response) => response.json())
+      .then((products) => setProducts(products));
+  }, []);
+  // console.log(products);
+
+  function search(e) {
+    if (e.target.value.length >= 3) {
+      setSearchInput(e.target.value);
+      const results = products.filter(
+        (product) =>
+          product.name.includes(e.target.value) ||
+          product.brand.includes(e.target.value) ||
+          product.description.includes(e.target.value)
+      );
+
+      setSearchResult(results);
+    } else {
+      setSearchResult(products);
+    }
+  }
   return (
     <div>
       <div className="toolbar" role="banner">
@@ -13,7 +39,7 @@ function App() {
           <div className="filter">
             <label htmlFor="search">Search</label>
 
-            <input id="search" />
+            <input id="search" onChange={search} />
           </div>
           <div className="filter">
             <label htmlFor="brands">Brands</label>
@@ -55,6 +81,28 @@ function App() {
             </tr>
           </thead>
           <tbody id="products-body"></tbody>
+          {!searchInput &&
+            products.map((product) => (
+              <tr>
+                <td>{product.id}</td>
+                <td>{product.name}</td>
+                <td>{product.brand}</td>
+                <td>{product.price}</td>
+                <td>{product.quantity}</td>
+                <td>{product.description}</td>
+              </tr>
+            ))}
+          {searchInput &&
+            searchResult.map((product) => (
+              <tr>
+                <td>{product.id}</td>
+                <td>{product.name}</td>
+                <td>{product.brand}</td>
+                <td>{product.price}</td>
+                <td>{product.quantity}</td>
+                <td>{product.description}</td>
+              </tr>
+            ))}
         </table>
       </div>
     </div>
