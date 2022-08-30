@@ -3,8 +3,8 @@ import "./App.css";
 
 function App() {
   const [products, setProducts] = useState([]);
-  const [searchResult, setSearchResult] = React.useState(products);
-  const [searchInput, setSearchInput] = React.useState("");
+  const [searchResult, setSearchResult] = useState(products);
+  const [searchInput, setSearchInput] = useState("");
   const options = Array.from(new Set(products.map((p) => p.brand)));
 
   useEffect(() => {
@@ -12,37 +12,39 @@ function App() {
       .then((response) => response.json())
       .then((products) => setProducts(products));
   }, []);
-  // console.log(products);
 
   function search(e) {
-    const brands = document.getElementById("brands");
-    // if statement for the brands selector
-    if (brands.value === "adidas") {
-      products.filter((product) => product.brand.includes("adidas"));
-    } else if (brands.value === "nike") {
-      products.filter((product) => product.brand.includes("nike"));
-    } else if (brands.value === "ASICS") {
-      console.log(brands.value);
-      products.filter((product) => product.brand.includes("ASICS"));
-    }
-    // if statement for the search values
+    // if for the search values
     if (e.target.value.length >= 3) {
       setSearchInput(e.target.value);
+      const brands = document.getElementById("brands");
+      // if for the brands selector
+      if (brands.value === "adidas") {
+        products.filter((product) => product.brand.includes("adidas"));
+      } else if (brands.value === "ASICS") {
+        products.filter((product) => product.brand.includes("ASICS"));
+      } else if (brands.value === "nike") {
+        products.filter((product) => product.brand.includes("nike"));
+      }
       const results = products.filter(
         (product) =>
-          product.name.includes(e.target.value && brands.value) ||
-          product.brand.includes(e.target.value && brands.value) ||
-          product.description.includes(e.target.value && brands.value)
+          (product.name.includes(e.target.value) &&
+            product.brand.includes(brands.value)) ||
+          product.description.includes(brands.value)
       );
 
       setSearchResult(results);
     } else if (e.target.value.length === 0) {
-      setSearchResult(products);
+      const brands = document.getElementById("brands");
+      setSearchResult(
+        products.filter((product) => product.brand.includes(brands.value))
+      );
     }
   }
 
   function stock(e) {
-    if (e.target.value === "all") {
+    setSearchInput(e.target.value);
+    if (e.target.value === "all-stock") {
       setSearchResult(products);
     } else if (e.target.value === "in-stock") {
       setSearchResult(products.filter((p) => p.quantity > 0));
@@ -73,13 +75,12 @@ function App() {
             </select>
           </div>
           <div className="filter">
-            <label htmlFor="in-stock">All</label>
+            <label htmlFor="all-stock">All</label>
             <input
               type="radio"
-              id="in-stock"
+              id="all-stock"
               name="stock"
-              value="all"
-              defaultChecked={true}
+              value="all-stock"
               onClick={stock}
             />
             <label htmlFor="in-stock">In stock</label>

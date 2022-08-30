@@ -42,7 +42,7 @@ app.get("/api/products", (req, res) => {
       price: "60",
       description:
         "Entry level boot that offers good all round performance and value",
-      brand: "ASICS",
+      brand: "asics",
       quantity: 8,
     },
     {
@@ -51,7 +51,7 @@ app.get("/api/products", (req, res) => {
       price: "100",
       description:
         "Based off our industrial-inspired cage exoskeleton design GEL-Kayano Trainer",
-      brand: "ASICS",
+      brand: "asics",
       quantity: 0,
     },
     {
@@ -60,7 +60,7 @@ app.get("/api/products", (req, res) => {
       price: "50.95",
       description:
         "lyte evolves to pursue a simplistic sporty look. It features a sleek mono-sock upper with integrated tongue for easy on and off access,",
-      brand: "ASICS",
+      brand: "asics",
       quantity: 3,
     },
     {
