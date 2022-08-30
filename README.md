@@ -5,10 +5,10 @@ To display the provided product data within a grid and apply the filtering optio
 # Instructions:
 
 - How to run this app. run the following commands in a 2 seperate terminals:
--terminal 1:(React)
+- terminal 1:(React)
   - npm install
   - npm start
--terminal 2: (Server)
+- terminal 2: (Server)
   - npm run server
 
 - Here are the tasks:
